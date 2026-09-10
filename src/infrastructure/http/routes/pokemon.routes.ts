@@ -15,7 +15,7 @@ pokemonRoutes.get('/:id', (req, res) => {
 pokemonRoutes.post('/' , (req,res) =>{
     return pokemonController.create(req,res);
 });
-pokemonRoutes.put('/',(req,res)=>{
+pokemonRoutes.put('/:id',(req,res)=>{
     return pokemonController.update(req,res);
 });
 pokemonRoutes.delete('/:id', (req, res) => {

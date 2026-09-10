@@ -13,12 +13,12 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
   }
 
   async findById(id: string): Promise<Pokemon | null> {
-    const pokemon = this.items.find((p) => p.id === id);
+    const pokemon = this.items.find((p) => String(p.id) === String(id));
     if (!pokemon) return null;
     return pokemon;
   }
   async update(pokemon: Pokemon): Promise<Pokemon | null> {
-    const index = this.items.findIndex((p) => p.id === pokemon.id);
+    const index = this.items.findIndex((p) => String(p.id) === String(pokemon.id));
     if(index === -1){
       return null;
     }
@@ -27,7 +27,7 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
   }
 
   async delete(id: string): Promise<boolean> {
-    const index = this.items.findIndex((p) => p.id === id);
+    const index = this.items.findIndex((p) => String(p.id) === String(id));
 
     if (index === -1) {
       return false; // Pokémon não encontrado no repositório
