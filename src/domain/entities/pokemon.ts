@@ -46,5 +46,24 @@ export class Pokemon{
     get nickname(){
         return this.props.nickname ?? this.props.name;
     }
+
+    public updateProps(data : Partial<Omit<IPokemonProps, 'id'>>):void{
+        if (data.name) this.props.name = data.name;
+        if (data.type) this.props.type = data.type;
+        if (data.hp !== undefined) this.props.hp = data.hp;
+        if (data.rarity) this.props.rarity = data.rarity;
+        if (data.nickname) this.props.nickname = data.nickname;
+    }
+
+    public toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      hp: this.hp,
+      rarity: this.rarity,
+      nickname: this.nickname
+    };
+  }
     
 }

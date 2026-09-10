@@ -5,4 +5,6 @@ export interface IPokemonRepositoryContract{
     save(pokemon: Pokemon): Promise<void>;
     findAll(): Promise<Pokemon[]>;
     findById(id: string): Promise<Pokemon | null>;
+    update(pokemon:Pokemon): Promise<Pokemon|null>;
+    delete(id:string): Promise<boolean>;
 }

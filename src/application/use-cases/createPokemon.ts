@@ -1,15 +1,8 @@
 import { Pokemon, PokemonType,Rarity } from "@domain/entities/pokemon";
 import { IPokemonRepositoryContract } from "@domain/repositories/pokemon.repository";
 import { AppError} from '@domain/errors/app.error';
+import { CreatePokemonDTO } from "@application/dtos/createPokemonDTO";
 
-export interface CreatePokemonDTO{
-    id : string;
-    name : string;
-    type : PokemonType;
-    hp:number;
-    rarity : Rarity;
-    nickname? : string;
-}
 
 export class CreatePokemonUseCase {
     constructor(private pokemonRepository: IPokemonRepositoryContract ){}

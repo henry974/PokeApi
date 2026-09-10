@@ -17,5 +17,23 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
     if (!pokemon) return null;
     return pokemon;
   }
+  async update(pokemon: Pokemon): Promise<Pokemon | null> {
+    const index = this.items.findIndex((p) => p.id === pokemon.id);
+    if(index === -1){
+      return null;
+    }
+    this.items[index] = pokemon;
+    return pokemon;
+  }
 
+  async delete(id: string): Promise<boolean> {
+    const index = this.items.findIndex((p) => p.id === id);
+
+    if (index === -1) {
+      return false; // Pokémon não encontrado no repositório
+    }
+
+    this.items.splice(index, 1);
+    return true; // Removido com sucesso
+  }
 }
