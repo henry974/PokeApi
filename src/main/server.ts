@@ -1,3 +1,5 @@
+import { errorHandler } from '@infrastructure/http/middleware/errorHandler';
+import { pokemonRoutes } from '@infrastructure/http/routes/pokemon.routes';
 import express, {NextFunction, Request, Response} from 'express';
 
 const app = express();
@@ -9,6 +11,10 @@ app.use((req: Request,res:Response,next: NextFunction) =>{
 
 app.use(express.json());
 
+app.use('/api/v1/pokemons',pokemonRoutes);
+
+
+/*
 export interface Pokemon{
     id: string;
     name: string;
@@ -111,15 +117,18 @@ app.put('/api/v1/pokemons/:id' , (req: Request, res: Response)=>{
     return res.status(200).json({messase:'pokemon atualizado'});
 });
 app.get('/api/v1/pokemons/:id',(req: Request,res: Response) =>{
-const {id} = req.params;
+    const {id} = req.params;
     const pokemon = pokemons.find((p)=> p.id === id);
     if(!pokemon){
         return res.status(404).json({error:'Pokemon não encontrado get por id'});
     }
     return res.status(200).json(pokemon);
 });
+*/
 
 
+
+app.use(errorHandler);
 const PORT= 3333;
 app.listen(PORT, ()=>{
     console.log(`[server]: API rodando em http://localhost: ${PORT}`);
