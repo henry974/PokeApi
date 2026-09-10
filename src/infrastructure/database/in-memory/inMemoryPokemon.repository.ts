@@ -8,7 +8,10 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
     this.items.push(pokemon);
   }
   
-  async findAll(): Promise<Pokemon[]> {
+  async findAll(type?:string): Promise<Pokemon[]> {
+    if(type){
+      return this.items.filter((p)=> p.type.toLowerCase() === type.toLowerCase());
+    }
     return this.items;
   }
 

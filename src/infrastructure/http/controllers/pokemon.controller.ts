@@ -17,11 +17,13 @@ export class PokemonController{
     async create(req: Request,res: Response): Promise<Response>{
         const {id,name,type,hp,rarity,nickname='sem apelido' } = req.body;
         const pokemon = await this.createPokemonUseCase.execute({id,name,type,hp,rarity,nickname});
-        return res.status(201).json({message:'Pokemon Criado com Sucesso',data: {id:pokemon.id,name:pokemon.name}});
+        return res.status(201).json({message:'Pokemon Criado com Sucesso',data: pokemon.toJSON()});
 
     }
     async list(req: Request,res: Response): Promise<Response>{
-        const pokemons = await this.listAllUseCase.execute();
+        const {type} = req.query;
+        
+        const pokemons = await this.listAllUseCase.execute(type as string | undefined);
         const formattedPokemons = pokemons.map((pokemon)=> pokemon.toJSON());
         return res.status(200).json({data:formattedPokemons});
         
