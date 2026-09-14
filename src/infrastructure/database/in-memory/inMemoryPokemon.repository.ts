@@ -39,4 +39,10 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
     this.items.splice(index, 1);
     return true; // Removido com sucesso
   }
+  async findByType(type: string): Promise<Pokemon[]> {
+    const filteredPokemons = this.items.filter(
+            (p) => p.type.toLowerCase() === String(type).toLowerCase()
+        );
+    return filteredPokemons;
+  }
 }

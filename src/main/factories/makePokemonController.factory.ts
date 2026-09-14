@@ -5,6 +5,7 @@ import { UpdatePokemonUseCase } from "@application/use-cases/updatePokemon";
 import { DeletePokemonUseCase } from "@application/use-cases/deletePokemon";
 import { PokemonController } from "@infrastructure/http/controllers/pokemon.controller";
 import { InMemoryPokemonRepository } from "@infrastructure/database/in-memory/inMemoryPokemon.repository";
+import { FindByTypeCase } from "@application/use-cases/findByType";
 
 const PokemonRepository = new InMemoryPokemonRepository();
 
@@ -14,6 +15,7 @@ export function makePokemonController(): PokemonController{
     const findByIdUseCase = new FindByIdUseCase(PokemonRepository);
     const deleteUseCase = new DeletePokemonUseCase(PokemonRepository);
     const updateUseCase = new UpdatePokemonUseCase(PokemonRepository);
+    const findByTypeCase = new FindByTypeCase(PokemonRepository);
 
-    return new PokemonController(createPokemonUseCase,findByIdUseCase,listAllUseCase,updateUseCase,deleteUseCase);
+    return new PokemonController(createPokemonUseCase,findByIdUseCase,listAllUseCase,updateUseCase,deleteUseCase,findByTypeCase);
 }

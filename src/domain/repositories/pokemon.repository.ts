@@ -7,4 +7,5 @@ export interface IPokemonRepositoryContract{
     findById(id: string): Promise<Pokemon | null>;
     update(pokemon:Pokemon): Promise<Pokemon|null>;
     delete(id:string): Promise<boolean>;
+    findByType(type: string): Promise<Pokemon[]>;
 }

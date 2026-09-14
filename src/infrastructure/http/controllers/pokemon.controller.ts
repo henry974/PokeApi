@@ -4,6 +4,7 @@ import { FindByIdUseCase } from "@application/use-cases/findById";
 import { ListAllUseCase } from "@application/use-cases/listAll";
 import { UpdatePokemonUseCase } from "@application/use-cases/updatePokemon";
 import { DeletePokemonUseCase } from "@application/use-cases/deletePokemon";
+import { FindByTypeCase } from "@application/use-cases/findByType";
 
 export class PokemonController{
     constructor(
@@ -12,6 +13,7 @@ export class PokemonController{
         private listAllUseCase : ListAllUseCase,
         private updateUseCase : UpdatePokemonUseCase,
         private deleteUseCase: DeletePokemonUseCase,
+        private findByTypeCase: FindByTypeCase
 
     ){}
     async create(req: Request,res: Response): Promise<Response>{
@@ -22,8 +24,11 @@ export class PokemonController{
     }
     async list(req: Request,res: Response): Promise<Response>{
         const {type} = req.query;
-        
-        const pokemons = await this.listAllUseCase.execute(type as string | undefined);
+        if(type){
+            const pokemons = await this.findByTypeCase.execute(type as string)
+            return res.status(200).json({data: pokemons?.map((p)=>p.toJSON())});
+        }
+        const pokemons = await this.listAllUseCase.execute(type as string | undefined); //tirar a opção de tipo do listAll
         const formattedPokemons = pokemons.map((pokemon)=> pokemon.toJSON());
         return res.status(200).json({data:formattedPokemons});
         
@@ -32,7 +37,7 @@ export class PokemonController{
         const {id} = req.params;
         const pokemon = await this.findByIdUseCase.execute(String(id));
         if(!pokemon){
-            return res.status(404).json({message:'Pokemon nao entrado'});
+            return res.status(404).json({message:'Pokemon nao encontrado'});
         }
         return res.status(200).json({data: pokemon.toJSON()});
     }
