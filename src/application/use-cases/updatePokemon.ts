@@ -1,6 +1,7 @@
 import { Pokemon } from "@domain/entities/pokemon";
 import { IPokemonRepositoryContract } from "@domain/repositories/pokemon.repository";
 import { UpdatePokemonDTO } from "@application/dtos/updatePokemonDTO";
+import { AppError } from "@domain/errors/app.error";
 
 
 export class UpdatePokemonUseCase{
@@ -8,7 +9,7 @@ export class UpdatePokemonUseCase{
     async execute(data: UpdatePokemonDTO):Promise<Pokemon>{
         const pokemon = await this.pokemonRepository.findById(data.id);
         if(!pokemon){
-            throw new Error('Pokemon não encontrado para atualização');
+            throw new AppError('Pokemon não encontrado para atualização',400);
         }
         pokemon.updateProps({
             name: data.name,

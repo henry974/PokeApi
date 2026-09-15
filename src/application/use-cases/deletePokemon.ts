@@ -1,3 +1,4 @@
+import { AppError } from "@domain/errors/app.error";
 import { IPokemonRepositoryContract } from "@domain/repositories/pokemon.repository";
 
 export class DeletePokemonUseCase {
@@ -7,7 +8,7 @@ export class DeletePokemonUseCase {
     const wasDeleted = await this.pokemonRepository.delete(id);
 
     if (!wasDeleted) {
-      throw new Error('Pokémon não encontrado para exclusão');
+      throw new AppError('Pokémon não encontrado para exclusão',400);
     }
   }
 }
