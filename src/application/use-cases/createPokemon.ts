@@ -1,13 +1,13 @@
-import { Pokemon, PokemonType,Rarity } from "@domain/entities/pokemon";
+import { Pokemon, PokemonType} from "@domain/entities/pokemon";
 import { IPokemonRepositoryContract } from "@domain/repositories/pokemon.repository";
 import { AppError} from '@domain/errors/app.error';
-import { CreatePokemonDTO } from "@application/dtos/createPokemonDTO";
+import { createPokemonDTO } from "@application/dtos/createPokemonDTO";
 
 
 export class CreatePokemonUseCase {
     constructor(private pokemonRepository: IPokemonRepositoryContract ){}
 
-    async execute(data: CreatePokemonDTO): Promise<Pokemon> {
+    async execute(data: createPokemonDTO): Promise<Pokemon> {
         const pokemonAlreadyExists = await this.pokemonRepository.findById(data.id);
         if(pokemonAlreadyExists){
             throw new AppError('ja existe pokemon com esse id',400);

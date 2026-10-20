@@ -279,7 +279,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/createPokemonDTO"
+                "$ref": "#/components/schemas/updatePokemonDTO"
               }
             }
           }
@@ -338,17 +338,37 @@
             "type": "string",
             "example": "Pikachu"
           },
-          "type": {
+          "type1": {
             "type": "string",
-            "example": "water"
+            "example": "electric"
+          },
+          "type2": {
+            "type": "string",
+            "example": "flying"
           },
           "hp": {
             "type": "number",
-            "example": 1231
+            "example": 35
           },
-          "rarity": {
-            "type": "string",
-            "example": "legendary"
+          "attack": {
+            "type": "number",
+            "example": 55
+          },
+          "defense": {
+            "type": "number",
+            "example": 40
+          },
+          "special_attack": {
+            "type": "number",
+            "example": 50
+          },
+          "special_defense": {
+            "type": "number",
+            "example": 50
+          },
+          "speed": {
+            "type": "number",
+            "example": 90
           },
           "nickname": {
             "type": "string",
@@ -370,17 +390,37 @@
             "type": "string",
             "example": "Pikachu"
           },
-          "type": {
+          "type1": {
             "type": "string",
-            "example": "water"
+            "example": "electric"
+          },
+          "type2": {
+            "type": "string",
+            "example": "flying"
           },
           "hp": {
             "type": "number",
-            "example": 1231
+            "example": 35
           },
-          "rarity": {
-            "type": "string",
-            "example": "legendary"
+          "attack": {
+            "type": "number",
+            "example": 55
+          },
+          "defense": {
+            "type": "number",
+            "example": 40
+          },
+          "special_attack": {
+            "type": "number",
+            "example": 50
+          },
+          "special_defense": {
+            "type": "number",
+            "example": 50
+          },
+          "speed": {
+            "type": "number",
+            "example": 90
           },
           "nickname": {
             "type": "string",
@@ -390,25 +430,64 @@
         "required": [
           "id",
           "name",
-          "type",
+          "type1",
           "hp",
-          "rarity",
-          "nickname"
+          "attack",
+          "defense",
+          "special_attack",
+          "special_defense",
+          "speed"
         ],
         "xml": {
           "name": "createPokemonDTO"
         }
       },
-      "ErrorResponse": {
+      "updatePokemonDTO": {
         "type": "object",
         "properties": {
-          "error": {
+          "name": {
             "type": "string",
-            "example": "Mensagem de erro."
+            "example": "Pikachu"
+          },
+          "type1": {
+            "type": "string",
+            "example": "electric"
+          },
+          "type2": {
+            "type": "string",
+            "example": "flying"
+          },
+          "hp": {
+            "type": "number",
+            "example": 35
+          },
+          "attack": {
+            "type": "number",
+            "example": 55
+          },
+          "defense": {
+            "type": "number",
+            "example": 40
+          },
+          "special_attack": {
+            "type": "number",
+            "example": 50
+          },
+          "special_defense": {
+            "type": "number",
+            "example": 50
+          },
+          "speed": {
+            "type": "number",
+            "example": 90
+          },
+          "nickname": {
+            "type": "string",
+            "example": "bixin"
           }
         },
         "xml": {
-          "name": "ErrorResponse"
+          "name": "updatePokemonDTO"
         }
       }
     }

@@ -1,0 +1,75 @@
+services:
+  # Serviço 1: A Nossa Manager API (Node.js + TS)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: manager_api
+    restart: unless-stopped
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      PORT: ${PORT}
+      NODE_ENV: ${NODE_ENV}
+      # Dentro da rede Docker o host do banco é o nome do serviço (postgres),
+      # e a porta é sempre a interna (5432), não a POSTGRES_PORT do host.
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    #volumes:
+      # Hot reload em desenvolvimento
+      #- .:/app
+      #- /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - manager_network
+
+  # Serviço 2: Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: manager_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - manager_network
+
+  # Serviço 3: Interface de Gerenciamento pgAdmin 4
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: manager_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - manager_network
+
+# Declarando a persistência de dados para o Banco e pgAdmin
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+# Rede interna privada para comunicação entre os containers
+networks:
+  manager_network:
+    driver: bridge

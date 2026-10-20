@@ -1,5 +1,4 @@
 
-import { Pokemon } from '@domain/entities/pokemon';
 import path from 'path';
 import swaggerAutogen from 'swagger-autogen';
 
@@ -22,26 +21,45 @@ const doc = {
     },
   ],
   definitions: {
-    Pokemon: {
-      id: '123e4567-e89b-12d3-a456-426614174000',
-      name: 'Pikachu',
-      type: 'water',
-      hp: 1231,
-      rarity:'legendary',
-      nickname:'bixin'
-    },
-    createPokemonDTO: {
-      $id: '123e4567-e89b-12d3-a456-426614174000',
-      $name: 'Pikachu',
-      $type: 'water',
-      $hp: 1231,
-      $rarity:'legendary',
-      $nickname:'bixin'
-    },
-    ErrorResponse: {
-      error: 'Mensagem de erro.',
-    },
+  Pokemon: {
+    id: "123e4567-e89b-12d3-a456-426614174000",
+    name: "Pikachu",
+    type1: "electric",
+    type2: "flying",
+    hp: 35,
+    attack: 55,
+    defense: 40,
+    special_attack: 50,
+    special_defense: 50,
+    speed: 90,
+    nickname: "bixin",
   },
+  createPokemonDTO: {
+    $id: "123e4567-e89b-12d3-a456-426614174000",
+    $name: "Pikachu",
+    $type1: "electric",
+    type2: "flying",
+    $hp: 35,
+    $attack: 55,
+    $defense: 40,
+    $special_attack: 50,
+    $special_defense: 50,
+    $speed: 90,
+    nickname: "bixin",
+  },
+  updatePokemonDTO: {
+    name: "Pikachu",
+    type1: "electric",
+    type2: "flying",
+    hp: 35,
+    attack: 55,
+    defense: 40,
+    special_attack: 50,
+    special_defense: 50,
+    speed: 90,
+    nickname: "bixin",
+  },
+  }
 };
 
 const outputFile = path.resolve(__dirname, 'swagger-output.json');

@@ -4,6 +4,6 @@ import { IPokemonRepositoryContract } from "@domain/repositories/pokemon.reposit
 export class ListAllUseCase{
     constructor(private pokemonRepository: IPokemonRepositoryContract){}
     async execute(type?:string) : Promise<Pokemon[]>{
-        return await this.pokemonRepository.findAll(type);
+        return await this.pokemonRepository.findAll();
     }
 }

@@ -1,24 +1,38 @@
 //import { IPokemonRepositoryContract } from "../../types/repository";
 
-export enum PokemonType{
+export enum PokemonType {
+    NORMAL = 'normal',
     FIRE = 'fire',
     WATER = 'water',
-    GRASS = 'grass',
     ELECTRIC = 'electric',
-    PSYCHIC = 'psychic'
+    GRASS = 'grass',
+    ICE = 'ice',
+    FIGHTING = 'fighting',
+    POISON = 'poison',
+    GROUND = 'ground',
+    FLYING = 'flying',
+    PSYCHIC = 'psychic',
+    BUG = 'bug',
+    ROCK = 'rock',
+    GHOST = 'ghost',
+    DRAGON = 'dragon',
+    DARK = 'dark',
+    STEEL = 'steel',
+    FAIRY = 'fairy',
 }
-export enum  Rarity{
-    COMMON = 'common',
-    RARE = 'rare',
-    LEGENDARY = 'legendary'
-}
+
 
 export interface IPokemonProps{
     id : string;
     name : string;
-    type : PokemonType;
-    hp:number;
-    rarity : Rarity;
+    type1 : PokemonType;
+    type2?: PokemonType;
+    hp: number;
+    attack: number;
+    defense: number;
+    special_attack: number;
+    special_defense: number;
+    speed : number;
     nickname? : string;
 }
 
@@ -35,14 +49,29 @@ export class Pokemon{
     get name() {
         return this.props.name;
     }
-    get type(){
-        return this.props.type;
+    get type1(){
+        return this.props.type1;
+    }
+    get type2(){
+        return this.props.type2 ?? null;
     }
     get hp(){
         return this.props.hp;
     }
-    get rarity(){
-        return this.props.rarity;
+    get attack(){
+        return this.props.attack;
+    }
+    get defense(){
+        return this.props.defense;
+    }
+    get special_attack(){
+        return this.props.special_attack;
+    }
+    get special_defense(){
+        return this.props.special_defense;
+    }
+    get speed(){
+        return this.props.speed;
     }
     get nickname(){
         return this.props.nickname ?? this.props.name;
@@ -53,9 +82,14 @@ export class Pokemon{
         this.validate(updateProps);
         
         if (data.name) this.props.name = data.name;
-        if (data.type) this.props.type = data.type;
+        if (data.type1) this.props.type1 = data.type1;
+        if(data.type2) this.props.type2 = data.type2;
         if (data.hp !== undefined) this.props.hp = data.hp;
-        if (data.rarity) this.props.rarity = data.rarity;
+        if (data.attack) this.props.attack = data.attack;
+        if (data.defense) this.props.defense = data.defense;
+        if (data.special_attack) this.props.special_attack = data.special_attack;
+        if (data.special_defense) this.props.special_defense = data.special_defense;
+        if (data.speed) this.props.speed = data.speed;
         if (data.nickname) this.props.nickname = data.nickname;
     }
 
@@ -69,12 +103,13 @@ export class Pokemon{
         if (props.hp <= 0) {
             throw new Error('O HP deve ser maior que zero.');
         }
-        if (!Object.values(PokemonType).includes(props.type)) {
+        if (!Object.values(PokemonType).includes(props.type1)) {
             throw new Error('Tipo de Pokémon inválido.');
         }
-        if (!Object.values(Rarity).includes(props.rarity)) {
-            throw new Error('Raridade de Pokémon inválida.');
+        if (props.type2 !== undefined && !Object.values(PokemonType).includes(props.type2)) {
+            throw new Error('Tipo secundário de Pokémon inválido.');
         }
+        
         
     }
 
@@ -82,9 +117,14 @@ export class Pokemon{
     return {
       id: this.id,
       name: this.name,
-      type: this.type,
+      type1: this.type1,
+      type2:this.type2,
       hp: this.hp,
-      rarity: this.rarity,
+      attack:this.attack,
+      defense:this.defense,
+      special_attack : this.special_attack,
+      special_defense: this.special_defense,
+      speed: this.speed,
       nickname: this.nickname
     };
   }

@@ -1,9 +1,14 @@
-import { Rarity,PokemonType } from "@domain/entities/pokemon";
-export interface CreatePokemonDTO{
+import {PokemonType } from "@domain/entities/pokemon";
+export interface createPokemonDTO{
     id : string;
     name : string;
-    type : PokemonType;
-    hp:number;
-    rarity : Rarity;
-    nickname? : string;
+    type1 : PokemonType;
+    type2?: PokemonType;
+    hp: number;
+    attack: number;
+    defense: number;
+    special_attack: number;
+    special_defense: number;
+    speed: number;
+    nickname?: string;
 }

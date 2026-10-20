@@ -86,7 +86,7 @@ pokemonRoutes.put('/:id',(req,res)=>{
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/definitions/createPokemonDTO" }
+            schema: { $ref: "#/components/schemas/updatePokemonDTO" }
           }
         }
       }

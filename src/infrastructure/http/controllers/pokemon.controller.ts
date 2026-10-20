@@ -16,22 +16,50 @@ export class PokemonController{
         private findByTypeCase: FindByTypeCase
 
     ){}
-    async create(req: Request,res: Response): Promise<Response>{
-        const {id,name,type,hp,rarity,nickname='sem apelido' } = req.body;
-        const pokemon = await this.createPokemonUseCase.execute({id,name,type,hp,rarity,nickname});
-        return res.status(201).json({message:'Pokemon Criado com Sucesso',data: pokemon.toJSON()});
+    async create(req: Request, res: Response): Promise<Response> {
+    const {
+        id,
+        name,
+        type1,
+        type2,
+        hp,
+        attack,
+        defense,
+        special_attack,
+        special_defense,
+        speed,
+        nickname = 'sem apelido',
+    } = req.body;
 
+    const pokemon = await this.createPokemonUseCase.execute({
+        id,
+        name,
+        type1,
+        type2,
+        hp,
+        attack,
+        defense,
+        special_attack,
+        special_defense,
+        speed,
+        nickname,
+    });
+
+    return res.status(201).json({
+        message: 'Pokemon Criado com Sucesso',
+        data: pokemon.toJSON(),
+    });
+}
+    async list(req: Request, res: Response): Promise<Response> {
+    const { type } = req.query;
+
+    if (type) {
+        const pokemons = await this.findByTypeCase.execute(String(type));
+        return res.status(200).json({ data: pokemons?.map((p) => p.toJSON()) });
     }
-    async list(req: Request,res: Response): Promise<Response>{
-        const {type} = req.query;
-        if(type){
-            const pokemons = await this.findByTypeCase.execute(type as string)
-            return res.status(200).json({data: pokemons?.map((p)=>p.toJSON())});
-        }
-        const pokemons = await this.listAllUseCase.execute(type as string | undefined); //tirar a opção de tipo do listAll
-        const formattedPokemons = pokemons.map((pokemon)=> pokemon.toJSON());
-        return res.status(200).json({data:formattedPokemons});
-        
+
+    const pokemons = await this.listAllUseCase.execute();
+    return res.status(200).json({ data: pokemons.map((p) => p.toJSON()) });
     }
     async findById(req:Request, res:Response): Promise<Response>{
         const {id} = req.params;
@@ -41,22 +69,40 @@ export class PokemonController{
         }
         return res.status(200).json({data: pokemon.toJSON()});
     }
-    async update(req:Request, res: Response): Promise<Response>{
-        const {id} = req.params;
-        const { name, type, hp, rarity, nickname } = req.body;
-        const pokemonAtualizado = await this.updateUseCase.execute({
-           id:String(id),
-            name,
-            type,
-            hp,
-            rarity,
-            nickname
-        });
-        return res.status(200).json({
-            message:'Pokemon atualizado',
-            data: pokemonAtualizado.toJSON()
-        });
-    }
+    async update(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const {
+        name,
+        type1,
+        type2,
+        hp,
+        attack,
+        defense,
+        special_attack,
+        special_defense,
+        speed,
+        nickname,
+    } = req.body;
+
+    const pokemonAtualizado = await this.updateUseCase.execute({
+        id: String(id),
+        name,
+        type1,
+        type2,
+        hp,
+        attack,
+        defense,
+        special_attack,
+        special_defense,
+        speed,
+        nickname,
+    });
+
+    return res.status(200).json({
+        message: 'Pokemon atualizado',
+        data: pokemonAtualizado.toJSON(),
+    });
+}
     async delete(req:Request,res:Response):Promise<Response>{
     const { id } = req.params;
 

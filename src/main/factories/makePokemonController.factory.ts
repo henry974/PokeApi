@@ -4,10 +4,10 @@ import { FindByIdUseCase } from "@application/use-cases/findById";
 import { UpdatePokemonUseCase } from "@application/use-cases/updatePokemon";
 import { DeletePokemonUseCase } from "@application/use-cases/deletePokemon";
 import { PokemonController } from "@infrastructure/http/controllers/pokemon.controller";
-import { InMemoryPokemonRepository } from "@infrastructure/database/in-memory/inMemoryPokemon.repository";
 import { FindByTypeCase } from "@application/use-cases/findByType";
+import { pgPokemonRepository } from "@infrastructure/database/postgres/pgPokemon.repository";
 
-const PokemonRepository = new InMemoryPokemonRepository();
+const PokemonRepository = new pgPokemonRepository();
 
 export function makePokemonController(): PokemonController{
     const createPokemonUseCase = new CreatePokemonUseCase(PokemonRepository);

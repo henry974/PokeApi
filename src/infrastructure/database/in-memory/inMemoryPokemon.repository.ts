@@ -10,7 +10,7 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
   
   async findAll(type?:string): Promise<Pokemon[]> {
     if(type){
-      return this.items.filter((p)=> p.type.toLowerCase() === type.toLowerCase());
+      return this.items.filter((p)=> p.type1.toLowerCase() === type.toLowerCase());
     }
     return this.items;
   }
@@ -41,7 +41,7 @@ export class InMemoryPokemonRepository implements IPokemonRepositoryContract {
   }
   async findByType(type: string): Promise<Pokemon[]> {
     const filteredPokemons = this.items.filter(
-            (p) => p.type.toLowerCase() === String(type).toLowerCase()
+            (p) => p.type1.toLowerCase() === String(type).toLowerCase()
         );
     return filteredPokemons;
   }

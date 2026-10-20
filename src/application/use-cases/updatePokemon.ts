@@ -12,10 +12,16 @@ export class UpdatePokemonUseCase{
             throw new AppError('Pokemon não encontrado para atualização',400);
         }
         pokemon.updateProps({
-            name: data.name,
-            type: data.type,
+            
+            name : data.name,
+            type1 : data.type1,
+            type2: data.type2,
             hp: data.hp,
-            rarity: data.rarity,
+            attack: data.attack,
+            defense: data.defense,
+            special_attack: data.special_attack,
+            special_defense: data.special_defense,
+            speed: data.speed,
             nickname: data.nickname
         });
         await this.pokemonRepository.update(pokemon);
