@@ -20,13 +20,14 @@ export enum PokemonType {
     STEEL = 'steel',
     FAIRY = 'fairy',
 }
-
+ 
 
 export interface IPokemonProps{
     id : string;
     name : string;
     type1 : PokemonType;
     type2?: PokemonType;
+    level : number;
     hp: number;
     attack: number;
     defense: number;
@@ -54,6 +55,9 @@ export class Pokemon{
     }
     get type2(){
         return this.props.type2 ?? null;
+    }
+    get level(){
+        return this.props.level;
     }
     get hp(){
         return this.props.hp;
@@ -84,6 +88,7 @@ export class Pokemon{
         if (data.name) this.props.name = data.name;
         if (data.type1) this.props.type1 = data.type1;
         if(data.type2) this.props.type2 = data.type2;
+        if(data.level) this.props.level = data.level;
         if (data.hp !== undefined) this.props.hp = data.hp;
         if (data.attack) this.props.attack = data.attack;
         if (data.defense) this.props.defense = data.defense;
@@ -100,13 +105,16 @@ export class Pokemon{
         if (!props.name || props.name.trim().length === 0) {
             throw new Error('O nome do Pokémon não pode ser vazio.');
         }
+        if (props.level < 1 || props.level > 100){
+            throw new Error('level inválido');
+        }
         if (props.hp <= 0) {
             throw new Error('O HP deve ser maior que zero.');
         }
         if (!Object.values(PokemonType).includes(props.type1)) {
             throw new Error('Tipo de Pokémon inválido.');
         }
-        if (props.type2 !== undefined && !Object.values(PokemonType).includes(props.type2)) {
+        if (props.type2 !== null && props.type2 !== undefined && !Object.values(PokemonType).includes(props.type2)) {
             throw new Error('Tipo secundário de Pokémon inválido.');
         }
         
@@ -119,6 +127,7 @@ export class Pokemon{
       name: this.name,
       type1: this.type1,
       type2:this.type2,
+      level:this.level,
       hp: this.hp,
       attack:this.attack,
       defense:this.defense,
@@ -127,6 +136,11 @@ export class Pokemon{
       speed: this.speed,
       nickname: this.nickname
     };
+  }
+  public updateLevel(level : number): void{
+    this.validate({...this.props,level});
+    this.props.level = level;
+
   }
     
 }

@@ -323,6 +323,40 @@
           }
         }
       }
+    },
+    "/api/v1/pokemons/{id}/level": {
+      "patch": {
+        "tags": [
+          "Pokemons"
+        ],
+        "summary": "Atualiza o nível de um Pokémon",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePokemonLevelDTO"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -345,6 +379,10 @@
           "type2": {
             "type": "string",
             "example": "flying"
+          },
+          "level": {
+            "type": "number",
+            "example": 10
           },
           "hp": {
             "type": "number",
@@ -398,6 +436,10 @@
             "type": "string",
             "example": "flying"
           },
+          "level": {
+            "type": "number",
+            "example": 10
+          },
           "hp": {
             "type": "number",
             "example": 35
@@ -431,6 +473,7 @@
           "id",
           "name",
           "type1",
+          "level",
           "hp",
           "attack",
           "defense",
@@ -456,6 +499,10 @@
           "type2": {
             "type": "string",
             "example": "flying"
+          },
+          "level": {
+            "type": "number",
+            "example": 10
           },
           "hp": {
             "type": "number",
@@ -488,6 +535,21 @@
         },
         "xml": {
           "name": "updatePokemonDTO"
+        }
+      },
+      "updatePokemonLevelDTO": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "number",
+            "example": 50
+          }
+        },
+        "required": [
+          "level"
+        ],
+        "xml": {
+          "name": "updatePokemonLevelDTO"
         }
       }
     }

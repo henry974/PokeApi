@@ -5,6 +5,7 @@ import { ListAllUseCase } from "@application/use-cases/listAll";
 import { UpdatePokemonUseCase } from "@application/use-cases/updatePokemon";
 import { DeletePokemonUseCase } from "@application/use-cases/deletePokemon";
 import { FindByTypeCase } from "@application/use-cases/findByType";
+import { UpdatePokemonLevelUseCase } from "@application/use-cases/updatePokemonLevel";
 
 export class PokemonController{
     constructor(
@@ -13,7 +14,8 @@ export class PokemonController{
         private listAllUseCase : ListAllUseCase,
         private updateUseCase : UpdatePokemonUseCase,
         private deleteUseCase: DeletePokemonUseCase,
-        private findByTypeCase: FindByTypeCase
+        private findByTypeCase: FindByTypeCase,
+        private updateLevelCase: UpdatePokemonLevelUseCase
 
     ){}
     async create(req: Request, res: Response): Promise<Response> {
@@ -22,6 +24,7 @@ export class PokemonController{
         name,
         type1,
         type2,
+        level,
         hp,
         attack,
         defense,
@@ -36,6 +39,7 @@ export class PokemonController{
         name,
         type1,
         type2,
+        level,
         hp,
         attack,
         defense,
@@ -75,6 +79,7 @@ export class PokemonController{
         name,
         type1,
         type2,
+        level,
         hp,
         attack,
         defense,
@@ -89,6 +94,7 @@ export class PokemonController{
         name,
         type1,
         type2,
+        level,
         hp,
         attack,
         defense,
@@ -110,4 +116,10 @@ export class PokemonController{
 
       return res.status(204).send();
     } 
+    async updateLevel(req:Request,res:Response): Promise<Response>{
+        const {id} = req.params;
+        const {level} = req.body;
+        await this.updateLevelCase.execute({id:String(id),level:Number(level)});
+        return res.status(200).json({message: 'nivel atualizado'});
+    }
 }

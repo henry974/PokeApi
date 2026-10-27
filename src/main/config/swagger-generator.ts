@@ -26,6 +26,7 @@ const doc = {
     name: "Pikachu",
     type1: "electric",
     type2: "flying",
+    level: 10,
     hp: 35,
     attack: 55,
     defense: 40,
@@ -39,6 +40,7 @@ const doc = {
     $name: "Pikachu",
     $type1: "electric",
     type2: "flying",
+    $level:10,
     $hp: 35,
     $attack: 55,
     $defense: 40,
@@ -51,6 +53,7 @@ const doc = {
     name: "Pikachu",
     type1: "electric",
     type2: "flying",
+    level: 10,
     hp: 35,
     attack: 55,
     defense: 40,
@@ -58,6 +61,9 @@ const doc = {
     special_defense: 50,
     speed: 90,
     nickname: "bixin",
+  },
+  updatePokemonLevelDTO: { 
+    $level: 50 
   },
   }
 };

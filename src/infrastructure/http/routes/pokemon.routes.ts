@@ -105,6 +105,18 @@ pokemonRoutes.put('/:id',(req,res)=>{
     return pokemonController.update(req,res);
 });
 
+pokemonRoutes.patch('/:id/level', (req, res) => {
+    /*
+      #swagger.tags = ['Pokemons']
+      #swagger.summary = 'Atualiza o nível de um Pokémon'
+      #swagger.requestBody = {
+        required: true,
+        content: { "application/json": { schema: { $ref: "#/components/schemas/updatePokemonLevelDTO" } } }
+      }
+    */
+    return pokemonController.updateLevel(req, res);
+});
+
 pokemonRoutes.delete('/:id', (req, res) => {
     /* 
       #swagger.tags = ['Pokemons']

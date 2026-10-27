@@ -4,6 +4,7 @@ export interface UpdatePokemonDTO{
     name? : string;
     type1? : PokemonType;
     type2?: PokemonType;
+    level: number;
     hp?: number;
     attack?: number;
     defense?: number;

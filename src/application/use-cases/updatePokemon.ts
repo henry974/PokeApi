@@ -16,6 +16,7 @@ export class UpdatePokemonUseCase{
             name : data.name,
             type1 : data.type1,
             type2: data.type2,
+            level: data.level,
             hp: data.hp,
             attack: data.attack,
             defense: data.defense,
