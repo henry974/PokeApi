@@ -1,6 +1,7 @@
 import { ITrainerRepositoryContract } from "@domain/repositories/trainer.repository";
 import { Trainer } from "@domain/entities/trainer";
 import { postgresPool } from "./connection";
+import { AppError } from "@domain/errors/app.error";
 
 const COLUMNS = `id, name, email, city, created_at`;
 
@@ -16,10 +17,19 @@ export class pgTrainerRepository implements ITrainerRepositoryContract{
     }
 
     async save(trainer: Trainer): Promise<void> {
-        await postgresPool.query(
+        try { await postgresPool.query(
             `INSERT INTO trainers (id, name, email, city) VALUES ($1,$2,$3,$4)`,
             [trainer.id, trainer.name, trainer.email, trainer.city],
         );
+        } catch(error:any){
+            if (error.code ===23505) {
+                throw new AppError('ja existe treinador com esse email',409)
+
+            }
+            throw error;
+        }
+
+        
     }
     async findByEmail(email: string): Promise<Trainer | null> {
         const query = `
