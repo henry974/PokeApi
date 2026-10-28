@@ -19,6 +19,7 @@ const doc = {
       name: 'Pokemons',
       description: 'Endpoints de gerenciamento de Pokemons',
     },
+    { name: 'Trainers', description: 'Endpoints de gerenciamento de Treinadores' },
   ],
   definitions: {
   Pokemon: {
@@ -64,6 +65,26 @@ const doc = {
   },
   updatePokemonLevelDTO: { 
     $level: 50 
+  },
+  Trainer: {
+    id: "123e4567-e89b-12d3-a456-426614174000",
+    name: "Ash Ketchum",
+    email: "ash@exemplo.com",
+    city: "Pallet Town",
+    createdAt: "2026-10-27T12:00:00.000Z",
+  },
+  createTrainerDTO: {
+    $name: "Ash Ketchum",
+    $email: "ash@exemplo.com",
+    $city: "Pallet Town",
+  },
+  updateTrainerDTO: {
+    name: "Ash Ketchum",
+    email: "ash@exemplo.com",
+    city: "Pallet Town",
+  },
+  ErrorResponse: {
+    error: "Mensagem de erro.",
   },
   }
 };

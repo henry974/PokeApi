@@ -14,9 +14,228 @@
     {
       "name": "Pokemons",
       "description": "Endpoints de gerenciamento de Pokemons"
+    },
+    {
+      "name": "Trainers",
+      "description": "Endpoints de gerenciamento de Treinadores"
     }
   ],
   "paths": {
+    "/api/v1/trainers/": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Lista todos os treinadores",
+        "description": "Retorna a lista completa de treinadores cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Lista de treinadores retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Trainer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Cria um novo treinador",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Treinador criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Treinador criado com sucesso"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Trainer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos (nome, cidade ou e-mail)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Já existe um treinador com este e-mail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createTrainerDTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/trainers/{email}": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Busca um treinador pelo e-mail",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "E-mail do treinador",
+            "example": "ash@exemplo.com"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Treinador encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Trainer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Treinador não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Atualiza um treinador existente",
+        "description": "Localiza o treinador pelo e-mail da URL. Os campos enviados no corpo substituem os atuais; se o corpo trouxer um e-mail novo, o e-mail do treinador é alterado.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "E-mail atual do treinador a ser atualizado",
+            "example": "ash@exemplo.com"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Treinador atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Treinador atualizado"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Trainer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Treinador não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "O novo e-mail já pertence a outro treinador",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateTrainerDTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/pokemons/": {
       "get": {
         "tags": [
@@ -550,6 +769,91 @@
         ],
         "xml": {
           "name": "updatePokemonLevelDTO"
+        }
+      },
+      "Trainer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ash Ketchum"
+          },
+          "email": {
+            "type": "string",
+            "example": "ash@exemplo.com"
+          },
+          "city": {
+            "type": "string",
+            "example": "Pallet Town"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-10-27T12:00:00.000Z"
+          }
+        },
+        "xml": {
+          "name": "Trainer"
+        }
+      },
+      "createTrainerDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ash Ketchum"
+          },
+          "email": {
+            "type": "string",
+            "example": "ash@exemplo.com"
+          },
+          "city": {
+            "type": "string",
+            "example": "Pallet Town"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "city"
+        ],
+        "xml": {
+          "name": "createTrainerDTO"
+        }
+      },
+      "updateTrainerDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ash Ketchum"
+          },
+          "email": {
+            "type": "string",
+            "example": "ash@exemplo.com"
+          },
+          "city": {
+            "type": "string",
+            "example": "Pallet Town"
+          }
+        },
+        "xml": {
+          "name": "updateTrainerDTO"
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Mensagem de erro."
+          }
+        },
+        "xml": {
+          "name": "ErrorResponse"
         }
       }
     }
